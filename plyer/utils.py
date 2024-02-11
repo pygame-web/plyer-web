@@ -53,7 +53,6 @@ class Platform:
 
         # On android, _sys_platform return 'linux2', so prefer to check the
         # import of Android module than trying to rely on _sys_platform.
-
         if self._platform_android is True:
             return 'android'
         elif self._platform_ios is True:
@@ -64,6 +63,8 @@ class Platform:
             return 'macosx'
         elif _sys_platform[:5] == 'linux':
             return 'linux'
+        elif sys.platform in ('emscripten','wasi'):
+            return 'web'
         return 'unknown'
 
 
