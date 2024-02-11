@@ -39,14 +39,18 @@ PACKAGES = [
     'plyer',
     'plyer.facades',
     'plyer.platforms',
-    'plyer.platforms.linux',
-    'plyer.platforms.android',
-    'plyer.platforms.win',
-    'plyer.platforms.win.libs',
-    'plyer.platforms.ios',
-    'plyer.platforms.macosx',
-    'plyer.platforms.macosx.libs',
 ]
+if not __import__("sysconfig").get_config_var("HOST_GNU_TYPE").startswith('wasm'):
+    PACKAGES.extend([
+        'plyer.platforms.android',
+        'plyer.platforms.win',
+        'plyer.platforms.win.libs',
+        'plyer.platforms.ios',
+        'plyer.platforms.macosx',
+        'plyer.platforms.macosx.libs',
+    ])
+else:
+    PACKAGES.append('plyer.platforms.web')
 
 with io.open(join(CURDIR, "README.md"), encoding="utf8") as fd:
     README = fd.read()
